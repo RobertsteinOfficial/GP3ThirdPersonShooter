@@ -26,6 +26,7 @@ void AMyCharacter::BeginPlay()
 
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
+	if (Gun == nullptr) return;
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
 	Gun->SetOwner(this);
 }
@@ -74,6 +75,7 @@ void AMyCharacter::LookRight(float AxisValue)
 void AMyCharacter::Shoot()
 {
 	Gun->PullTrigger();
+
 }
 
 
