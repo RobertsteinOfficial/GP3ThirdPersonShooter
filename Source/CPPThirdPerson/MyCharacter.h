@@ -8,6 +8,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class AGun;
 
 UCLASS()
 class CPPTHIRDPERSON_API AMyCharacter : public ACharacter
@@ -15,13 +16,19 @@ class CPPTHIRDPERSON_API AMyCharacter : public ACharacter
 	GENERATED_BODY()
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Movement")
 	float RotationSpeed = 1;
 
 	UPROPERTY(EditAnywhere)
 	USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* Camera;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	TSubclassOf<AGun> GunClass;
+
+	UPROPERTY()
+	AGun* Gun;
 
 public:
 
@@ -44,5 +51,6 @@ private:
 	void LookUp(float AxisValue);
 	UFUNCTION()
 	void LookRight(float AxisValue);
-
+	UFUNCTION()
+	void Shoot();
 };
