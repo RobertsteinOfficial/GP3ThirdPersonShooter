@@ -24,7 +24,9 @@ void APressurePlate::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &APressurePlate::OnTriggerOverlap);
 }
+
 
 // Called every frame
 void APressurePlate::Tick(float DeltaTime)
@@ -33,3 +35,11 @@ void APressurePlate::Tick(float DeltaTime)
 
 }
 
+
+void APressurePlate::OnTriggerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor == nullptr) return;
+
+	UE_LOG(LogTemp, Warning, TEXT("Overlapped Actor %s"), *OtherActor->GetName());
+
+}
