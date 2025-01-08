@@ -15,8 +15,10 @@ class CPPTHIRDPERSON_API AShooterAIController : public AAIController
 	GENERATED_BODY()
 
 private:
+	/*UPROPERTY(EditAnywhere)
+	float AcceptanceRadius = 200;*/
 	UPROPERTY(EditAnywhere)
-	float AcceptanceRadius = 200;
+	class UBehaviorTree* AIBehaviour;
 
 protected:
 	virtual void BeginPlay() override;
