@@ -16,12 +16,17 @@ class CPPTHIRDPERSON_API AMyCharacter : public ACharacter
 	GENERATED_BODY()
 
 private:
+	UPROPERTY(EditDefaultsOnly, Category = "Stats")
+	float MaxHealth = 100;
+	UPROPERTY(VisibleAnywhere, Category = "Stats")
+	float CurrentHealth;
+
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float RotationSpeed = 1;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Camera")
 	USpringArmComponent* SpringArm;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Camera")
 	UCameraComponent* Camera;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
@@ -30,6 +35,7 @@ private:
 	UPROPERTY()
 	AGun* Gun;
 
+
 public:
 
 	AMyCharacter();
@@ -37,6 +43,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
+	UFUNCTION(BlueprintPure)
+	bool IsDead() const;
+
 protected:
 
 	virtual void BeginPlay() override;

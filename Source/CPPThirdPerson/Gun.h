@@ -20,13 +20,19 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* Mesh;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Particle System")
 	UParticleSystem* MuzzleFlash;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Particle System")
+	UParticleSystem* ImpactEffect;
+
+	UPROPERTY(EditAnywhere, Category = "Weapon Stats")
 	float MaxRange = 1000;
 
-public:	
+	UPROPERTY(EditAnywhere, Category = "Weapon Stats")
+	float Damage = 10.f;
+
+public:
 	// Sets default values for this actor's properties
 	AGun();
 

@@ -24,6 +24,8 @@ void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	CurrentHealth = MaxHealth;
+
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
 	if (Gun == nullptr) return;
@@ -52,6 +54,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction(TEXT("Shoot"), EInputEvent::IE_Pressed, this, &AMyCharacter::Shoot);
 }
 
+
 void AMyCharacter::MoveForward(float AxisValue)
 {
 	AddMovementInput(GetActorForwardVector() * AxisValue);
@@ -78,4 +81,18 @@ void AMyCharacter::Shoot()
 
 }
 
+float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	DamageToApply = FMath::Min(CurrentHealth, DamageToApply);
+	CurrentHealth -= DamageToApply;
 
+	UE_LOG(LogTemp, Warning, TEXT("Current Health = %f"), CurrentHealth);
+
+	return DamageToApply;
+}
+
+bool AMyCharacter::IsDead() const
+{
+	return CurrentHealth <= 0;
+}

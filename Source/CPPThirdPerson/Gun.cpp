@@ -5,6 +5,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
+#include "Engine/DamageEvents.h"
 
 
 // Sets default values
@@ -56,10 +57,19 @@ void AGun::PullTrigger()
 
 	if (bSuccess)
 	{
-		DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
+		AActor* HitActor = Hit.GetActor();
+		if (HitActor == nullptr) return;
+
+		//DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
+		FVector ShotDirection = Rotation.Vector();
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, (-ShotDirection).Rotation());
+
+		FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
+		HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+
 	}
 
 
-	DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Green, true);
+	//DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Green, true);
 }
 
