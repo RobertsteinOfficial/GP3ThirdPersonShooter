@@ -49,6 +49,9 @@ public:
 	UFUNCTION(BlueprintPure)
 	bool IsDead() const;
 
+	UFUNCTION()
+	void Shoot();
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -63,6 +66,5 @@ private:
 	void LookUp(float AxisValue);
 	UFUNCTION()
 	void LookRight(float AxisValue);
-	UFUNCTION()
-	void Shoot();
+
 };

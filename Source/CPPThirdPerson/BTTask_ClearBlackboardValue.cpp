@@ -16,25 +16,25 @@ uint16 UBTTask_ClearBlackboardValue::GetInstanceMemorySize() const
 
 EBTNodeResult::Type UBTTask_ClearBlackboardValue::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	//Super::ExecuteTask(OwnerComp, NodeMemory);
+	Super::ExecuteTask(OwnerComp, NodeMemory);
 
-	MYBTStruct* value = reinterpret_cast<MYBTStruct*>(NodeMemory);
+	/*MYBTStruct* value = reinterpret_cast<MYBTStruct*>(NodeMemory);
 	value->value = 5;
+	bNotifyTick = true;*/
 
+	OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 
-	bNotifyTick = true;
-
-	return EBTNodeResult::InProgress;
+	return EBTNodeResult::Succeeded;
 }
 
-void UBTTask_ClearBlackboardValue::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
-{
-
-	if (NodeMemory == nullptr) return;
-
-	MYBTStruct* value = reinterpret_cast<MYBTStruct*>(NodeMemory);
-
-	UE_LOG(LogTemp, Warning, TEXT("Test Clear Key %d"), (*value).value);
-
-
-}
+//void UBTTask_ClearBlackboardValue::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+//{
+//
+//	if (NodeMemory == nullptr) return;
+//
+//	MYBTStruct* value = reinterpret_cast<MYBTStruct*>(NodeMemory);
+//
+//	UE_LOG(LogTemp, Warning, TEXT("Test Clear Key %d"), (*value).value);
+//
+//
+//}
