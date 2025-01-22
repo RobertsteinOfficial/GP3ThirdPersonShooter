@@ -12,4 +12,10 @@ ACPPThirdPersonGameMode::ACPPThirdPersonGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+
+
+}
+
+void ACPPThirdPersonGameMode::PawnKilled(APawn* PawnKilled)
+{
 }

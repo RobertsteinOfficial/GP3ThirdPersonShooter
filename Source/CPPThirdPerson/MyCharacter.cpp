@@ -4,6 +4,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Gun.h"
+#include "Components/CapsuleComponent.h"
+#include "CPPThirdPersonGameMode.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -87,7 +89,16 @@ float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEve
 	DamageToApply = FMath::Min(CurrentHealth, DamageToApply);
 	CurrentHealth -= DamageToApply;
 
-	UE_LOG(LogTemp, Warning, TEXT("Current Health = %f"), CurrentHealth);
+	if (IsDead())
+	{
+		ACPPThirdPersonGameMode* GameMode = GetWorld()->GetAuthGameMode<ACPPThirdPersonGameMode>();
+
+		if (GameMode != nullptr)
+		GameMode->PawnKilled(this);
+
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		DetachFromControllerPendingDestroy();
+	}
 
 	return DamageToApply;
 }

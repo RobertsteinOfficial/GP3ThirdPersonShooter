@@ -13,6 +13,7 @@ class ACPPThirdPersonGameMode : public AGameModeBase
 
 public:
 	ACPPThirdPersonGameMode();
+	virtual void PawnKilled(APawn* PawnKilled);
 };
 
 
